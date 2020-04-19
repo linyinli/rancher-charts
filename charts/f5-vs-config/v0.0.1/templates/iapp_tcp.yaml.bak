@@ -2,7 +2,6 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: {{ include "f5-vs-configmap.fullname" . }}-iapp-tcp
-  namespace: default
   labels:
     f5type: virtual-server
 data:
@@ -11,11 +10,11 @@ data:
    {
      "virtualServer": {
        "backend": {
-         "serviceName": "nginxservice",
-         "servicePort": 80
+         "serviceName": "{{ .Values.serviceName }}",
+         "servicePort": {{ .Values.servicePort }}
        },
        "frontend": {
-         "partition": "service",
+         "partition": "{{ .Values.partition }}",
          "iapp": "/Common/iapp_tcp",
          "iappPoolMemberTable": {
            "name": "pool__members",

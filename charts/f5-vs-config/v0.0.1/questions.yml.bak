@@ -78,3 +78,25 @@ questions:
   type: string
   label: F5 Mode
   group: "Frontend Settings"
+
+
+- variable: iapp.type
+  default: "TCP"
+  description: "iapp type"
+  type: enum
+  group: "iapp Type Settings"
+  options:
+    - "TCP"
+    - "UDP"
+    - "FTP"
+    - "HTTP"
+    - "HTTPS"
+  required: true
+  label: iapp Type
+  show_subquestion_if: "TCP"
+  subquestions:
+  - variable: type.tcp
+    default: ""
+    description: "F5 VS IP"
+    type: string
+    label: pool__addr
