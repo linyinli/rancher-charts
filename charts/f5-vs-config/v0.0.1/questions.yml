@@ -11,9 +11,9 @@ questions:
   group: "Backend Settings"
 
 - variable: servicePort
-  default: 80
+  default: "80"
   description: "Port of backend service"
-  type: int
+  type: string
   required: true
   label: Service Port
   group: "Backend Settings"
@@ -27,9 +27,9 @@ questions:
   group: "Backend Settings"
   subquestions:
   - variable: healthMonitors.interval
-    default: 30
+    default: "30"
     description: "healthMonitors interval"
-    type: int
+    type: string
     label: HealthMonitors Interval
   - variable: healthMonitors.portocol
     default: "http"
@@ -42,9 +42,9 @@ questions:
     type: string
     label: HealthMonitors Send Parameter
   - variable: healthMonitors.timeout
-    default: 120
+    default: "120"
     description: "healthMonitors timeout"
-    type: int
+    type: string
     label: HealthMonitors Timeout
 
 - variable: virtualAddress.port
