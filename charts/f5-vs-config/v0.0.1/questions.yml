@@ -1,0 +1,102 @@
+categories:
+- F5
+- LB
+questions:
+- variable: serviceName
+  default: "nginx"
+  description: "Name of backend service"
+  type: string
+  required: true
+  label: Service Name
+  group: "Backend Settings"
+
+- variable: servicePort
+  default: 80
+  description: "Port of backend service"
+  type: int
+  required: true
+  label: Service Port
+  group: "Backend Settings"
+
+- variable: healthMonitors
+  default: "false"
+  description: "Enable healthMonitors"
+  label: healthMonitors
+  type: boolean
+  show_subquestion_if: true
+  group: "Backend Settings"
+  subquestions:
+  - variable: interval
+    default: 30
+    description: "healthMonitors interval"
+    type: int
+    label: Interval
+  - variable: portocol
+    default: "http"
+    description: "healthMonitors portocol"
+    type: string
+    label: Portocol
+  - variable: send
+    default: "GET /\r\n"
+    description: "healthMonitors send parameter"
+    type: string
+    label:  Send Parameter
+  - variable: timeout
+    default: 120
+    description: "healthMonitors timeout"
+    type: int
+    label:  Timeout
+
+- variable: virtualAddress.port
+  default: "80"
+  description: "F5 vitrualAddress port"
+  type: int
+  label: F5 VitrualAddress Port
+  group: "Frontend Settings"
+- variable: virtualAddress.bindAddr
+  default: ""
+  description: "F5 vitrualAddress bindAddr"
+  type: string
+  label: F5 VitrualAddress bindAddr
+  group: "Frontend Settings"
+
+- variable: partition
+  default: ""
+  description: "F5 partition"
+  type: string
+  label: F5 Partition
+  group: "Frontend Settings"
+- variable: balance
+  default: "lest-connections-member"
+  description: "F5 balance policy"
+  type: string
+  label: F5 Balance Policy
+  group: "Frontend Settings"
+- variable: mode
+  default: "tcp"
+  description: "F5 mode"
+  type: string
+  label: F5 Mode
+  group: "Frontend Settings"
+
+
+- variable: iapp.type
+  default: "TCP"
+  description: "iapp type"
+  type: enum
+  group: "iapp Type Settings"
+  options:
+    - "TCP"
+    - "UDP"
+    - "FTP"
+    - "HTTP"
+    - "HTTPS"
+  required: true
+  label: iapp Type
+  show_subquestion_if: "TCP"
+  subquestions:
+  - variable: type.tcp
+    default: ""
+    description: "F5 VS IP"
+    type: string
+    label: pool__addr

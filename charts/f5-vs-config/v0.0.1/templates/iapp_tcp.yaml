@@ -1,0 +1,43 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "f5-vs-configmap.fullname" . }}-iapp-tcp
+  namespace: default
+  labels:
+    f5type: virtual-server
+data:
+  schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
+  data: |
+   {
+     "virtualServer": {
+       "backend": {
+         "serviceName": "nginxservice",
+         "servicePort": 80
+       },
+       "frontend": {
+         "partition": "service",
+         "iapp": "/Common/iapp_tcp",
+         "iappPoolMemberTable": {
+           "name": "pool__members",
+           "columns": [
+               {"name": "addr", "kind": "IPAddress"},
+               {"name": "port", "kind": "Port"},
+               {"name": "connection_limit", "value": "0"}
+           ]
+         },
+         "iappOptions": {
+           "description": "iapp_tcp"
+         },
+         "iappVariables": {
+           "pool__pool_to_use": "/#create_new#",
+           "pool__addr": "192.168.1.132",
+           "pool__port": "8081",
+           "vs__SNATConfig": "10.244.2.20 10.244.2.21",
+           "vs__ProfileDefaultPersist": "source_addr",
+           "pool_lb": "round-robin",
+           "monitor__Monitors": "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31",
+           "pool__irules": "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
+         }
+       }
+     }
+   }
