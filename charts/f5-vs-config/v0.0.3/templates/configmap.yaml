@@ -36,8 +36,8 @@ data:
            "vs__SNATConfig": "{{ .Values.iappVariables.vs__SNATConfig }}",
            "vs__ProfileDefaultPersist": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
            {{- if (eq .Values.iappVariables.protocol "tcp") }}
-           "monitor__Monitors": "{{ .Values.iappVariables.tcp.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.tcp.pool__irules }}",
+           "monitor__Monitors": "1",
+           "pool__irules": "1",
            {{- end }}
            {{- if (eq .Values.iappVariables.protocol "udp") }}
            "monitor__Monitors": "{{ .Values.iappVariables.udp.monitor__Monitors }}",
