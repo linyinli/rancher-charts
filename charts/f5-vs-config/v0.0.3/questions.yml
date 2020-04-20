@@ -131,14 +131,14 @@ questions:
   label: iapp irules Settings
   group: "Frontend iapp Protocol Settings"
 
-- variable: iappVariables.http_and_https_to_backend_http.monitor__Monitors
+- variable: iappVariables.serverHttp.monitor__Monitors
   default: "http_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
   description: "iapp monitors settings"
   show_if: "iappVariables.protocol=http||iappVariables.protocol=https-to-backend-http"
   type: string
   label: iapp Monitors Settings
   group: "Frontend iapp Protocol Settings"
-- variable: iappVariables.https_to_backend_https.monitor__Monitors
+- variable: iappVariables.serverHttps.monitor__Monitors
   default: "https_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
   description: "iapp monitors settings"
   show_if: "iappVariables.protocol=https-to-backend-https"
