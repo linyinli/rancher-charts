@@ -36,11 +36,9 @@ data:
            "vs__SNATConfig": "{{ .Values.iappVariables.vs__SNATConfig }}",
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http")) }}
            "monitor__Monitors": "http_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31",
-           "pool__irules": "when HTTP_REQUEST { \r\n set var1 \"test1.f5.com\" \r\n if {  [HTTP::host] eq \"$var1\"  } {\r\n   pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   } else {\r\n    pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   }\r\n} ",
            {{- end }}
            {{- if (eq .Values.iappVariables.protocol "https-to-backend-https") }}
-           "monitor__Monitors": "https_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31",
-           "pool__irules": "when HTTP_REQUEST { \r\n set var1 \"test1.f5.com\" \r\n if {  [HTTP::host] eq \"$var1\"  } {\r\n   pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   } else {\r\n    pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   }\r\n} ",
+           "monitor__Monitors": "{{ .Values.iappVariables.serverHttps.monitor__Monitors }}",
            {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http") (eq .Values.iappVariables.protocol "https-to-backend-https")) }}
            "vs__ProfileHTTP": "{{ .Values.iappVariables.vs__ProfileHTTP }}",
