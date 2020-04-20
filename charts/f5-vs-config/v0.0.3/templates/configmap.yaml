@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: {{ template "f5-vs-config.fullname" . }}-iapp-tcp-vs
+  name: iapp-{{ .Values.iappVariables.protocol }}-vs-{{ .Values.iappVariables.pool__addr }}-{{ .Values.iappVariables.pool__port }}
   labels:
     f5type: virtual-server
 data:
