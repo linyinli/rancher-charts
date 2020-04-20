@@ -52,7 +52,7 @@ questions:
   type: string
   required: true
   label: iapp Pool Address
-  group: "Frontend Pool Settings"
+  group: "Frontend iapp Pool Settings"
 - variable: iappVariables.pool__port
   default: ""
   description: "iapp pool port"
