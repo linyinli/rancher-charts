@@ -36,7 +36,7 @@ data:
            "vs__SNATConfig": "{{ .Values.iappVariables.vs__SNATConfig }}",
            "vs__ProfileDefaultPersist": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
            "pool_lb": "{{ .Values.iappVariables.pool_lb }}",
-           {{- if .Values.iappVariables.protocol=tcp }}
+           {{- if (eq .Values.iappVariables.protocol "tcp") }}
            "monitor__Monitors": "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31",
            "pool__irules": "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
            {{- end }}
