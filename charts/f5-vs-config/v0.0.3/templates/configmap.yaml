@@ -39,8 +39,6 @@ data:
            {{- end }}
            "vs__ProfileDefaultPersist": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http")) }}
-           "monitor__Monitors": "{{ .Values.iappVariables.http_and_https_to_backend_http.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
            {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "https-to-backend-http") (eq .Values.iappVariables.protocol "https-to-backend-https")) }}
            "vs__ProfileClientSSL": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
