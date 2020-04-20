@@ -1,0 +1,16 @@
+name: f5-vs-config
+type: application
+version: 0.0.2
+appVersion: 0.0.2
+description: F5 CIS customied virtual service configmap
+keywords:
+- F5
+- LB
+home: https://clouddocs.f5.com/training/community/containers/html/
+icon: file://../f5-logo.svg
+sources:
+- https://github.com/kubernetes/charts
+maintainers:
+- name: Yinlin
+  email: yinlin@rancher.com
+engine: gotpl

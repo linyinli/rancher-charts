@@ -1,0 +1,128 @@
+categories:
+- F5
+- LB
+questions:
+- variable: serviceName
+  default: ""
+  description: "Name of backend service"
+  type: string
+  required: true
+  label: Service Name
+  group: "Backend Settings"
+- variable: servicePort
+  default: 80
+  description: "Port of backend service"
+  type: string
+  required: true
+  label: Service Port
+  group: "Backend Settings"
+
+
+- variable: partition
+  default: "Common"
+  description: "F5 partition"
+  type: string
+  label: F5 Partition
+  group: "Frontend Settings"
+- variable: iapp
+  default: "/Common/iapp_tcp"
+  description: "F5 iapp template"
+  type: string
+  label: F5 iapp Template
+  group: "Frontend Settings"
+
+
+- variable: iappOptions.description
+  default: ""
+  description: "iapp Options description"
+  type: string
+  label: iapp Options Description
+  group: "Frontend iapp Options Settings"
+
+
+- variable: iappVariables.pool__pool_to_use
+  default: "/#create_new#"
+  description: "iapp pool to use"
+  type: string
+  label: iapp Pool To Use
+  group: "Frontend iapp Pool Settings"
+- variable: iappVariables.pool__addr
+  default: ""
+  description: "iapp pool address"
+  type: string
+  required: true
+  label: iapp Pool Address
+  group: "Frontend Pool Settings"
+- variable: iappVariables.pool__port
+  default: ""
+  description: "iapp pool port"
+  type: string
+  required: true
+  label: iapp Pool Port
+  group: "Frontend iapp Pool Settings"
+
+- variable: iappVariables.vs__SNATConfig
+  default: ""
+  description: "iapp virutal server SNAT config"
+  type: string
+  required: true
+  label: iapp Virutal Server SNAT Config
+  group: "Frontend iapp VS Settings"
+- variable: iappVariables.vs__ProfileDefaultPersist
+  default: "source_addr"
+  description: "iapp virutal server profile default persist"
+  type: string
+  required: true
+  label: iapp Virutal Server Profile Default Persist
+  group: "Frontend iapp VS Settings"
+
+- variable: iappVariables.pool_lb
+  default: "least-connections-member"
+  description: "iapp pool lb policy"
+  type: enum
+  options:
+    - "dynamic-ratio-member"
+    - "dynamic-ratio-node"
+    - "fastest-app-response"
+    - "least-connections-member"
+    - "least-connections-node"
+    - "least-sessions"
+    - "observed-member"
+    - "observed-node"
+    - "predictive-member"
+    - "predictive-node"
+    - "ratio-least-connections-member"
+    - "ratio-least-connections-node"
+    - "ratio-member"
+    - "ratio-node"
+    - "round-robin"
+    - "ratio-session"
+    - "weighted-least-connections-member"
+    - "weighted-least-connections-node"
+  label: iapp Pool LB Policy
+  group: "Frontend iapp Pool Settings"
+
+- variable: iappVariables.protocol
+  default: "TCP"
+  description: "iapp protocol"
+  type: enum
+  options:
+    - "TCP"
+    - "UDP"
+    - "FTP"
+    - "HTTP"
+    - "HTTPS"
+  label: iapp Protocol
+  group: "Frontend iapp Protocol Settings"
+  show_subquestion_if: "TCP"
+  subquestions:
+   - variable: iappVariables.monitor__Monitors
+    default: "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
+    description: "iapp monitors settings"
+    type: string
+    label: iapp Monitors Settings
+   - variable: iappVariables.pool__irules
+    default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
+    description: "iapp irules settings"
+    type: string
+    label: iapp irules Settings
