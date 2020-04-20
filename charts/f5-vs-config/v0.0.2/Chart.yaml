@@ -1,7 +1,7 @@
 name: f5-vs-config
 type: application
-version: 0.0.1
-appVersion: 0.0.1
+version: 0.0.2
+appVersion: 0.0.2
 description: F5 CIS customied virtual service configmap
 keywords:
 - F5
