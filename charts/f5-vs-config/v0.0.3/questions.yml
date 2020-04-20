@@ -114,16 +114,3 @@ questions:
     - "HTTPS"
   label: iapp Protocol
   group: "Frontend iapp Protocol Settings"
-  subquestions:
-   - variable: iappVariables.tcp.monitor__Monitors
-    default: "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
-    description: "iapp monitors settings"
-    show_if: iappVariables.protocol="TCP"
-    type: string
-    label: iapp Monitors Settings
-   - variable: iappVariables.tcp.pool__irules
-    default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
-    description: "iapp irules settings"
-    type: string
-    show_if: iappVariables.protocol="TCP"
-    label: iapp irules Settings
