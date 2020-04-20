@@ -37,7 +37,7 @@ questions:
   description: "iapp Options description"
   type: string
   label: iapp Options Description
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend iapp Options Settings"
 
 
 - variable: iappVariables.pool__pool_to_use
@@ -45,21 +45,21 @@ questions:
   description: "iapp pool to use"
   type: string
   label: iapp Pool To Use
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend iapp Pool Settings"
 - variable: iappVariables.pool__addr
   default: ""
   description: "iapp pool address"
   type: string
   required: true
   label: iapp Pool Address
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend Pool Settings"
 - variable: iappVariables.pool__port
   default: ""
   description: "iapp pool port"
   type: string
   required: true
   label: iapp Pool Port
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend iapp Pool Settings"
 
 - variable: iappVariables.vs__SNATConfig
   default: ""
@@ -67,17 +67,17 @@ questions:
   type: string
   required: true
   label: iapp Virutal Server SNAT Config
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend iapp VS Settings"
 - variable: iappVariables.vs__ProfileDefaultPersist
   default: "source_addr"
   description: "iapp virutal server profile default persist"
   type: string
   required: true
   label: iapp Virutal Server Profile Default Persist
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend iapp VS Settings"
 
 - variable: iappVariables.pool_lb
-  default: "round-robin"
+  default: "least-connections-member"
   description: "iapp pool lb policy"
   type: enum
   options:
@@ -100,4 +100,44 @@ questions:
     - "weighted-least-connections-member"
     - "weighted-least-connections-node"
   label: iapp Pool LB Policy
-  group: "Frontend iapp Options and Variables Settings"
+  group: "Frontend iapp Pool Settings"
+
+- variable: iappVariables.protocol
+  default: "TCP"
+  description: "iapp protocol"
+  type: enum
+  options:
+    - "TCP"
+    - "UDP"
+    - "FTP"
+    - "HTTP"
+    - "HTTPS"
+  label: iapp Protocol
+  group: "Frontend iapp Protocol Settings"
+  show_subquestion_if: "TCP"
+  subquestions:
+   - variable: iappVariables.monitor__Monitors
+    default: "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
+    description: "iapp monitors settings"
+    type: string
+    label: iapp Monitors Settings
+   - variable: iappVariables.pool__irules
+    default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
+    description: "iapp irules settings"
+    type: string
+    label: iapp irules Settings
+  show_subquestion_if: "UDP"
+  subquestions:
+   - variable: iappVariables.monitor__Monitors
+    default: "udp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
+    description: "iapp monitors settings"
+    type: string
+    label: iapp Monitors Settings
+   - variable: iappVariables.pool__irules
+    default: "when CLIENT_ACCEPTED { \r\n log local0. \"ok\"\r\n} "
+    description: "iapp irules settings"
+    type: string
+    label: iapp irules Settings
+
+
+
