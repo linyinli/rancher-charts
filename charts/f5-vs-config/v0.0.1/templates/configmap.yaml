@@ -12,14 +12,8 @@ data:
     {
       "virtualServer": {
         "backend": {
-          "servicePort": "{{ .Values.servicePort }}",
-          "serviceName": "{{ .Values.serviceName }}",
-          "healthMonitors": [{
-            "interval": "{{ .Values.healthMonitors.interval }}",
-            "protocol": "{{ .Values.healthMonitors.protocol }}",
-            "send": "{{ .Values.healthMonitors.send }}",
-            "timeout": "{{ .Values.healthMonitors.timeout }}"
-          }]
+          "servicePort": {{ .Values.servicePort }},
+          "serviceName": "{{ .Values.serviceName }}"
         },
         "frontend": {
           "virtualAddress": {
