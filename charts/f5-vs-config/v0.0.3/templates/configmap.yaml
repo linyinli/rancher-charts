@@ -38,14 +38,6 @@ data:
            "vs__ProfileHTTP": "{{ .Values.iappVariables.vs__ProfileHTTP }}",
            {{- end }}
            "vs__ProfileDefaultPersist": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
-           {{- if (eq .Values.iappVariables.protocol "tcp") }}
-           "monitor__Monitors": "{{ .Values.iappVariables.tcp.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.tcp.pool__irules }}\t",
-           {{- end }}
-           {{- if (eq .Values.iappVariables.protocol "udp") }}
-           "monitor__Monitors": "{{ .Values.iappVariables.udp.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.udp.pool__irules }}",
-           {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http")) }}
            "monitor__Monitors": "{{ .Values.iappVariables.http_and_https_to_backend_http.monitor__Monitors }}",
            "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
