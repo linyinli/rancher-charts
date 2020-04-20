@@ -47,14 +47,8 @@ data:
            "pool__irules": "{{ .Values.iappVariables.udp.pool__irules }}",
            {{- end }}
            "vs__ProfileDefaultPersist": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
-           {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http")) }}
-           "monitor__Monitors": "{{ .Values.iappVariables.http_and_https_to_backend_http.monitor__Monitors }}",
-           {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "https-to-backend-http") (eq .Values.iappVariables.protocol "https-to-backend-https")) }}
            "vs__ProfileClientSSL": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
-           {{- end }}
-           {{- if (eq .Values.iappVariables.protocol "https-to-backend-https") }}
-           "monitor__Monitors": "{{ .Values.iappVariables.https_to_backend_https.monitor__Monitors }}",
            {{- end }}
            "pool_lb": "{{ .Values.iappVariables.pool_lb }}"
          }
