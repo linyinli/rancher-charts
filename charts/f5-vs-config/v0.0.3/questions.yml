@@ -92,12 +92,12 @@ questions:
   description: "iapp protocol"
   type: enum
   options:
-    - "TCP"
-    - "UDP"
-    - "FTP"
-    - "HTTP"
-    - "HTTPS_TO_BACKEND_HTTP"
-    - "HTTPS_TO_BACKEND_HTTPS"
+    - "tcp"
+    - "udp"
+    - "ftp"
+    - "http"
+    - "https-to-backend-http"
+    - "https-to-backend-https"
   label: iapp Protocol
   group: "Frontend iapp Protocol Settings"
 
