@@ -36,11 +36,11 @@ data:
            "vs__SNATConfig": "{{ .Values.iappVariables.vs__SNATConfig }}",
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http")) }}
            "monitor__Monitors": "{{ .Values.iappVariables.serverHttp.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
+           #"pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
            {{- end }}
            {{- if (eq .Values.iappVariables.protocol "https-to-backend-https") }}
            "monitor__Monitors": "{{ .Values.iappVariables.serverHttps.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
+           #"pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
            {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend-http") (eq .Values.iappVariables.protocol "https-to-backend-https")) }}
            "vs__ProfileHTTP": "{{ .Values.iappVariables.vs__ProfileHTTP }}",
