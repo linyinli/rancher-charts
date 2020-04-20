@@ -47,15 +47,15 @@ data:
            "pool__irules": "{{ .Values.iappVariables.udp.pool__irules }}",
            {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https-to-backend_http")) }}
-           "monitor__Monitors": "{{ .Values.iappVariables.http-and-https-to-backend-http.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.http-and-https.pool__irules }}",
+           "monitor__Monitors": "{{ .Values.iappVariables.http_and_https_to_backend_http.monitor__Monitors }}",
+           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
            {{- end }}
-           {{- if (or (eq .Values.iappVariables.protocol "https-to-backend_http") (eq .Values.iappVariables.protocol "https-to-backend_https")) }}
+           {{- if (or (eq .Values.iappVariables.protocol "https-to-backend-http") (eq .Values.iappVariables.protocol "https-to-backend_https")) }}
            "vs__ProfileClientSSL": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
            {{- end }}
            {{- if (eq .Values.iappVariables.protocol "https-to-backend_https") }}
-           "monitor__Monitors": "{{ .Values.iappVariables.https-to-backend-https.monitor__Monitors }}",
-           "pool__irules": "{{ .Values.iappVariables.http-and-https.pool__irules }}",
+           "monitor__Monitors": "{{ .Values.iappVariables.https_to_backend_https.monitor__Monitors }}",
+           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
            {{- end }}
            "pool_lb": "{{ .Values.iappVariables.pool_lb }}"
          }

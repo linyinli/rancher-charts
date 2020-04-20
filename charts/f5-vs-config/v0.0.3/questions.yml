@@ -131,21 +131,21 @@ questions:
   label: iapp irules Settings
   group: "Frontend iapp Protocol Settings"
 
-- variable: iappVariables.http-and-https-to-backend-http.monitor__Monitors
+- variable: iappVariables.http_and_https_to_backend_http.monitor__Monitors
   default: "http_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
   description: "iapp monitors settings"
   show_if: "iappVariables.protocol=http||iappVariables.protocol=https-to-backend-http"
   type: string
   label: iapp Monitors Settings
   group: "Frontend iapp Protocol Settings"
-- variable: iappVariables.https-to-backend-https.monitor__Monitors
+- variable: iappVariables.https_to_backend_https.monitor__Monitors
   default: "https_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
   description: "iapp monitors settings"
   show_if: "iappVariables.protocol=https-to-backend_https"
   type: string
   label: iapp Monitors Settings
   group: "Frontend iapp Protocol Settings"
-- variable: iappVariables.http-and-https.pool__irules
+- variable: iappVariables.http_and_https.pool__irules
   default: "when HTTP_REQUEST { \r\n set var1 \"test1.f5.com\" \r\n if {  [HTTP::host] eq \"$var1\"  } {\r\n   pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   } else {\r\n    pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   }\r\n} "
   description: "iapp irules settings"
   type: string
