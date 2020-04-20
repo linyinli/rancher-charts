@@ -61,26 +61,11 @@ questions:
   label: iapp Pool Port
   group: "Frontend iapp Pool Settings"
 
-- variable: iappVariables.vs__SNATConfig
-  default: ""
-  description: "iapp virutal server SNAT config"
-  type: string
-  required: true
-  label: iapp Virutal Server SNAT Config
-  group: "Frontend iapp VS Settings"
-- variable: iappVariables.vs__ProfileDefaultPersist
-  default: "source_addr"
-  description: "iapp virutal server profile default persist"
-  type: string
-  required: true
-  label: iapp Virutal Server Profile Default Persist
-  group: "Frontend iapp VS Settings"
-
 - variable: iappVariables.pool_lb
   default: "least-connections-member"
   description: "iapp pool lb policy"
   type: enum
-  options:
+options:
     - "dynamic-ratio-member"
     - "dynamic-ratio-node"
     - "fastest-app-response"
@@ -111,16 +96,11 @@ questions:
     - "UDP"
     - "FTP"
     - "HTTP"
-    - "HTTPS"
+    - "HTTPS_TO_BACKEND_HTTP"
+    - "HTTPS_TO_BACKEND_HTTPS"
   label: iapp Protocol
   group: "Frontend iapp Protocol Settings"
-- variable: iappVariables.tcp.monitor__Monitors
-  default: "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
-  description: "iapp monitors settings"
-  show_if: "iappVariables.protocol=TCP"
-  type: string
-  label: iapp Monitors Settings
-  group: "Frontend iapp Protocol Settings"
+
 - variable: iappVariables.tcp.pool__irules
   default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
   description: "iapp irules settings"
@@ -128,3 +108,96 @@ questions:
   show_if: "iappVariables.protocol=TCP"
   label: iapp irules Settings
   group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.udp.monitor__Monitors
+  default: "udp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=UDP"
+  type: string
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+- variable: iappVariables.udp.pool__irules
+  default: "when CLIENT_ACCEPTED { \r\n log local0. \"ok\"\r\n} "
+  description: "iapp irules settings"
+  type: string
+  show_if: "iappVariables.protocol=UDP"
+  label: iapp irules Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.http.monitor__Monitors
+  default: "http_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTP"
+  type: string
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+- variable: iappVariables.https.monitor__Monitors
+  default: "https_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
+  type: string
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+- variable: iappVariables.http.pool__irules
+  default: "when HTTP_REQUEST { \r\n set var1 \"test1.f5.com\" \r\n if {  [HTTP::host] eq \"$var1\"  } {\r\n   pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   } else {\r\n    pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   }\r\n} "
+  description: "iapp irules settings"
+  type: string
+  show_if: "iappVariables.protocol=HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
+  label: iapp irules Settings
+  group: "Frontend iapp Protocol Settings"
+
+
+- variable: iappVariables.vs__SNATConfig
+  default: ""
+  description: "iapp virutal server SNAT config"
+  type: string
+  required: true
+  label: iapp Virutal Server SNAT Config
+  group: "Frontend iapp VS Settings"
+- variable: iappVariables.vs__ProfileHTTP
+  default: "insert-xforwarded-for enabled"
+  description: "iapp virutal server profile http setting"
+  type: string
+  show_if: "iappVariables.protocol=HTTP"
+  label: iapp Virutal Server Profile HTTP Setting
+  group: "Frontend iapp VS Settings"
+- variable: iappVariables.vs__ProfileDefaultPersist
+  default: "source_addr"
+  description: "iapp virutal server profile default persist"
+  type: string
+  required: true
+  label: iapp Virutal Server Profile Default Persist
+  group: "Frontend iapp VS Settings"
+- variable: iappVariables.vs__ProfileClientSSL
+  default: "/Common/www_test_com /Common/www_test2_com"
+  description: "iapp virutal server profile client ssl setting"
+  type: string
+  show_if: "iappVariables.protocol=HTTPS_TO_BACKEND_HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
+  label: iapp Virutal Server Profile Client SSL Setting
+  group: "Frontend iapp VS Settings"
+
+- variable: iappVariables.pool_lb
+  default: "least-connections-member"
+  description: "iapp pool lb policy"
+  type: enum
+  options:
+    - "dynamic-ratio-member"
+    - "dynamic-ratio-node"
+    - "fastest-app-response"
+    - "least-connections-member"
+    - "least-connections-node"
+    - "least-sessions"
+    - "observed-member"
+    - "observed-node"
+    - "predictive-member"
+    - "predictive-node"
+    - "ratio-least-connections-member"
+    - "ratio-least-connections-node"
+    - "ratio-member"
+    - "ratio-node"
+    - "round-robin"
+    - "ratio-session"
+    - "weighted-least-connections-member"
+    - "weighted-least-connections-node"
+  label: iapp Pool LB Policy
+  group: "Frontend iapp Pool Settings"
