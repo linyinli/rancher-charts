@@ -12,13 +12,13 @@ data:
     {
       "virtualServer": {
         "backend": {
-          "servicePort": {{ .Values.servicePort }},
+          "servicePort": "{{ .Values.servicePort }}",
           "serviceName": "{{ .Values.serviceName }}",
           "healthMonitors": [{
-            "interval": {{ .Values.healthMonitors.interval }},
+            "interval": "{{ .Values.healthMonitors.interval }}",
             "protocol": "{{ .Values.healthMonitors.protocol }}",
             "send": "{{ .Values.healthMonitors.send }}",
-            "timeout": {{ .Values.healthMonitors.timeout }}
+            "timeout": "{{ .Values.healthMonitors.timeout }}"
           }]
         },
         "frontend": {
