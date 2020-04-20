@@ -88,7 +88,7 @@ questions:
   group: "Frontend iapp Pool Settings"
 
 - variable: iappVariables.protocol
-  default: "TCP"
+  default: "tcp"
   description: "iapp protocol"
   type: enum
   options:
