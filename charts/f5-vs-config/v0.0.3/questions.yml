@@ -109,7 +109,7 @@ questions:
   label: iapp Monitors Settings
   group: "Frontend iapp Protocol Settings"
 - variable: iappVariables.tcp.pool__irules
-  default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
+  default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n}\t"
   description: "iapp irules settings"
   type: string
   show_if: "iappVariables.protocol=tcp"
