@@ -127,7 +127,7 @@ options:
 - variable: iappVariables.http.monitor__Monitors
   default: "http_new send 'GET /index.html HTTP/1.1\r\nHost:localhost.domain.com\r\nConnection:Close\r\n\r\n' recv 'nginx' interval 10 timeout 31"
   description: "iapp monitors settings"
-  show_if: "iappVariables.protocol=HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTP"
+  show_if: "iappVariables.protocol=HTTP|iappVariables.protocol=HTTPS_TO_BACKEND_HTTP"
   type: string
   label: iapp Monitors Settings
   group: "Frontend iapp Protocol Settings"
@@ -142,7 +142,7 @@ options:
   default: "when HTTP_REQUEST { \r\n set var1 \"test1.f5.com\" \r\n if {  [HTTP::host] eq \"$var1\"  } {\r\n   pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   } else {\r\n    pool /service/default_iapp-onlypool.app/default_iapp-onlypool_pool\r\n   }\r\n} "
   description: "iapp irules settings"
   type: string
-  show_if: "iappVariables.protocol=HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
+  show_if: "iappVariables.protocol=HTTP|iappVariables.protocol=HTTPS_TO_BACKEND_HTTP|iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
   label: iapp irules Settings
   group: "Frontend iapp Protocol Settings"
 
@@ -172,7 +172,7 @@ options:
   default: "/Common/www_test_com /Common/www_test2_com"
   description: "iapp virutal server profile client ssl setting"
   type: string
-  show_if: "iappVariables.protocol=HTTPS_TO_BACKEND_HTTP||iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
+  show_if: "iappVariables.protocol=HTTPS_TO_BACKEND_HTTP|iappVariables.protocol=HTTPS_TO_BACKEND_HTTPS"
   label: iapp Virutal Server Profile Client SSL Setting
   group: "Frontend iapp VS Settings"
 
