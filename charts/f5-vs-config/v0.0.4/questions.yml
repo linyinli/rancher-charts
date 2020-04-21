@@ -48,7 +48,7 @@ questions:
     - "iapp_tcp"
     - "iapp_udp"
     - "iapp_ftp"
-    - "Ciapp_http"
+    - "iapp_http"
     - "iapp_https"
     - "iapp_https_server443"
   required: true
@@ -112,7 +112,7 @@ questions:
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.tcp.pool__irules
-  default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
+  default: "none"
   description: "iappVariables pool__irules"
   type: string
   show_if: "iappVariables.protocol=tcp"
@@ -130,7 +130,7 @@ questions:
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.udp.pool__irules
-  default: "when CLIENT_ACCEPTED { \r\n log local0. \"ok\"\r\n} "
+  default: "none"
   description: "iappVariables pool__irules"
   type: string
   show_if: "iappVariables.protocol=udp"
