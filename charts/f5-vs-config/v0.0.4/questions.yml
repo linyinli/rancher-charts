@@ -1,0 +1,215 @@
+categories:
+- F5
+- LB
+questions:
+- variable: serviceName
+  default: ""
+  description: "Name of backend service"
+  type: string
+  required: true
+  label: Service Name
+  group: "Backend Settings"
+- variable: servicePort
+  default: 80
+  description: "Port of backend service"
+  type: string
+  required: true
+  label: Service Port
+  group: "Backend Settings"
+
+
+- variable: partition
+  default: "service"
+  description: "F5 partition"
+  type: string
+  required: true
+  label: F5 Partition
+  group: "Frontend Settings"
+- variable: iapp
+  default: "/Common/iapp_tcp"
+  description: "F5 iapp template"
+  type: enum
+  options:
+    - "/Common/iapp_tcp"
+    - "/Common/iapp_udp"
+    - "/Common/iapp_ftp"
+    - "/Common/iapp_http"
+    - "/Common/iapp_https"
+    - "/Common/iapp_https_server443"
+  label: F5 iapp Template
+  group: "Frontend Settings"
+
+
+- variable: iappOptions.description
+  default: "iapp-tcp"
+  description: "iappOptions description"
+  type: string
+  required: true
+  label: iappOptions Description
+  group: "Frontend iapp Options Settings"
+
+
+- variable: iappVariables.pool__pool_to_use
+  default: "/#create_new#"
+  description: "iappVariables pool__pool_to_use"
+  type: string
+  required: true
+  label: iappVariables pool__pool_to_use
+  group: "Frontend iapp Pool Settings"
+- variable: iappVariables.pool__addr
+  default: ""
+  description: "iappVariables pool__addr"
+  type: string
+  required: true
+  label: iappVariables pool__addr
+  group: "Frontend iapp Pool Settings"
+- variable: iappVariables.pool__port
+  default: ""
+  description: "iappVariables pool__port"
+  type: string
+  required: true
+  label: iappVariables pool__port
+  group: "Frontend iapp Pool Settings"
+
+- variable: iappVariables.pool_lb
+  default: "least-connections-member"
+  description: "iappVariables pool_lb"
+  type: enum
+  options:
+    - "least-connections-member"
+    - "round-robin"
+  label: iappVariables pool_lb
+  group: "Frontend iapp Pool Settings"
+
+- variable: iappVariables.protocol
+  default: "tcp"
+  description: "iapp protocol type"
+  type: enum
+  options:
+    - "tcp"
+    - "udp"
+    - "ftp"
+    - "http"
+    - "https"
+    - "https-server443"
+  label: iapp Protocol Type
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.tcp.monitor__Monitors
+  default: "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=tcp"
+  type: string
+  required: true
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.tcp.pool__irules
+  default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
+  description: "iapp irules settings"
+  type: string
+  show_if: "iappVariables.protocol=tcp"
+  required: true
+  label: iapp irules Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.udp.monitor__Monitors
+  default: "udp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=udp"
+  type: string
+  required: true
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.udp.pool__irules
+  default: "when CLIENT_ACCEPTED { \r\n log local0. \"ok\"\r\n} "
+  description: "iapp irules settings"
+  type: string
+  show_if: "iappVariables.protocol=udp"
+  required: true
+  label: iapp irules Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.serverHttp.monitor__Monitors
+  default: "http_new send"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=http||iappVariables.protocol=https"
+  type: string
+  required: true
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.serverHttps.monitor__Monitors
+  default: "https_new send"
+  description: "iapp monitors settings"
+  show_if: "iappVariables.protocol=https-server443"
+  type: string
+  required: true
+  label: iapp Monitors Settings
+  group: "Frontend iapp Protocol Settings"
+
+- variable: iappVariables.http_and_https.pool__irules
+  default: "none"
+  description: "iapp irules settings"
+  type: string
+  show_if: "iappVariables.protocol=http||iappVariables.protocol=https||iappVariables.protocol=https-server443"
+  required: true
+  label: iapp irules Settings
+  group: "Frontend iapp Protocol Settings"
+
+
+- variable: iappVariables.vs__SNATConfig
+  default: "automap"
+  description: "iappVariables vs__SNATConfig"
+  type: string
+  required: true
+  label: iappVariables vs__SNATConfig
+  group: "Frontend iapp VS Settings"
+
+- variable: iappVariables.vs__ProfileTCP
+  default: "tcp"
+  description: "iappVariables vs__ProfileTCP"
+  type: enum
+  options:
+    - "tcp"
+    - "tcp idle-timeout 300"
+  show_if: "iappVariables.protocol!=udp"
+  required: true
+  label: iappVariables vs__ProfileTCP
+  group: "Frontend iapp VS Settings"
+
+- variable: iappVariables.vs__ProfileHTTP
+  default: "http"
+  description: "iappVariables vs__ProfileHTTP"
+  type: enum
+  options:
+    - "http"
+    - "insert-xforwarded-for enabled"
+  show_if: "iappVariables.protocol=http||iappVariables.protocol=https||iappVariables.protocol=https-server443"
+  required: true
+  label: iappVariables vs__ProfileHTTP
+  group: "Frontend iapp VS Settings"
+
+- variable: iappVariables.vs__ProfileDefaultPersist
+  default: "none"
+  description: "iappVariables vs__ProfileDefaultPersist"
+  type: enum
+  options:
+    - "none"
+    - "cookie"
+    - "cookie expiration 30:00"
+    - "source_addr"
+    - "source_addr timeout 1800"
+  required: true
+  label: iappVariables vs__ProfileDefaultPersist
+  group: "Frontend iapp VS Settings"
+
+- variable: iappVariables.vs__ProfileClientSSL
+  default: "/Common/www_test_com /Common/www_test2_com"
+  description: "iappVariables vs__ProfileClientSSL"
+  type: string
+  required: true
+  show_if: "iappVariables.protocol=https||iappVariables.protocol=https-server443"
+  label: iappVariables vs__ProfileClientSSL
+  group: "Frontend iapp VS Settings"

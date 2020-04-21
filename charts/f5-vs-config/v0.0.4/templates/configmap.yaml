@@ -1,0 +1,64 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: iapp-{{ .Values.iappVariables.protocol }}-vs-{{ .Values.iappVariables.pool__addr }}-{{ .Values.iappVariables.pool__port }}
+  labels:
+    f5type: virtual-server
+data:
+  # See the f5-schema table for schema-controller compatibility
+  # https://clouddocs.f5.com/containers/latest/releases_and_versioning.html#f5-schema
+  schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
+  data: |
+   {
+     "virtualServer": {
+       "backend": {
+         "serviceName": "{{ .Values.serviceName }}",
+         "servicePort": {{ .Values.servicePort }}
+       },
+       "frontend": {
+         "partition": "{{ .Values.partition }}",
+         "iapp": "{{ .Values.iapp }}",
+         "iappPoolMemberTable": {
+           "name": "pool__members",
+           "columns": [
+               {"name": "addr", "kind": "IPAddress"},
+               {"name": "port", "kind": "Port"},
+               {"name": "connection_limit", "value": "0"}
+           ]
+         },
+         "iappOptions": {
+           "description": "{{ .Values.iappOptions.description }}"
+         },
+         "iappVariables": {
+           "pool__pool_to_use": "{{ .Values.iappVariables.pool__pool_to_use }}",
+           "pool__addr": "{{ .Values.iappVariables.pool__addr }}",
+           "pool__port": "{{ .Values.iappVariables.pool__port }}",
+           "vs__SNATConfig": "{{ .Values.iappVariables.vs__SNATConfig }}",
+           {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https") (eq .Values.iappVariables.protocol "https-server443")) }}
+           "vs__ProfileHTTP": "{{ .Values.iappVariables.vs__ProfileHTTP }}",
+           {{- end }}
+           "vs__ProfileDefaultPersist": "{{ .Values.iappVariables.vs__ProfileDefaultPersist }}",
+           {{- if (eq .Values.iappVariables.protocol "tcp") }}
+           "monitor__Monitors": "{{ .Values.iappVariables.tcp.monitor__Monitors }}",
+           "pool__irules": "{{ .Values.iappVariables.tcp.pool__irules }}",
+           {{- end }}
+           {{- if (eq .Values.iappVariables.protocol "udp") }}
+           "monitor__Monitors": "{{ .Values.iappVariables.udp.monitor__Monitors }}",
+           "pool__irules": "{{ .Values.iappVariables.udp.pool__irules }}",
+           {{- end }}
+           {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https")) }}
+           "monitor__Monitors": "{{ .Values.iappVariables.serverHttp.monitor__Monitors }}",
+           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
+           {{- end }}
+           {{- if (eq .Values.iappVariables.protocol "https-server443") }}
+           "monitor__Monitors": "{{ .Values.iappVariables.serverHttps.monitor__Monitors }}",
+           "pool__irules": "{{ .Values.iappVariables.http_and_https.pool__irules }}",
+           {{- end }}
+           {{- if (or (eq .Values.iappVariables.protocol "https") (eq .Values.iappVariables.protocol "https-server443")) }}
+           "vs__ProfileClientSSL": "{{ .Values.iappVariables.vs__ProfileClientSSL }}",
+           {{- end }}
+           "pool_lb": "{{ .Values.iappVariables.pool_lb }}"
+         }
+       }
+     }
+   }
