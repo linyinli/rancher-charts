@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: iapp-{{ .Values.iappVariables.protocol }}-vs-{{ .Values.iappVariables.pool__addr }}-{{ .Values.iappVariables.pool__port }}
+  name: iapp-{{ .Values.iappVariables.protocol }}-{{ .Values.iappVariables.pool__addr }}-{{ .Values.iappVariables.pool__port }}
   labels:
     f5type: virtual-server
 data:
@@ -34,6 +34,9 @@ data:
            "pool__addr": "{{ .Values.iappVariables.pool__addr }}",
            "pool__port": "{{ .Values.iappVariables.pool__port }}",
            "vs__SNATConfig": "{{ .Values.iappVariables.vs__SNATConfig }}",
+           {{- if (or (eq .Values.iappVariables.protocol "tcp") (eq .Values.iappVariables.protocol "ftp")  (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https") (eq .Values.iappVariables.protocol "https-server443")) }}
+           "vs__ProfileTCP": "{{ .Values.iappVariables.vs__ProfileTCP }}",
+           {{- end }}
            {{- if (or (eq .Values.iappVariables.protocol "http") (eq .Values.iappVariables.protocol "https") (eq .Values.iappVariables.protocol "https-server443")) }}
            "vs__ProfileHTTP": "{{ .Values.iappVariables.vs__ProfileHTTP }}",
            {{- end }}

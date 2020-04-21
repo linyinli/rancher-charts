@@ -43,7 +43,14 @@ questions:
 - variable: iappOptions.description
   default: "iapp-tcp"
   description: "iappOptions description"
-  type: string
+  type: enum
+  options:
+    - "iapp_tcp"
+    - "iapp_udp"
+    - "iapp_ftp"
+    - "Ciapp_http"
+    - "iapp_https"
+    - "iapp_https_server443"
   required: true
   label: iappOptions Description
   group: "Frontend iapp Options Settings"
@@ -97,65 +104,65 @@ questions:
 
 - variable: iappVariables.tcp.monitor__Monitors
   default: "tcp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
-  description: "iapp monitors settings"
+  description: "iappVariables monitor__Monitors"
   show_if: "iappVariables.protocol=tcp"
   type: string
   required: true
-  label: iapp Monitors Settings
+  label: iappVariables monitor__Monitors
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.tcp.pool__irules
   default: "when CLIENT_ACCEPTED { \r\n log local0. \"clientIP[IP::client_addr]\"\r\n} "
-  description: "iapp irules settings"
+  description: "iappVariables pool__irules"
   type: string
   show_if: "iappVariables.protocol=tcp"
   required: true
-  label: iapp irules Settings
+  label: iappVariables pool__irules
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.udp.monitor__Monitors
   default: "udp_new send 'udpdata' recv 'nginx' interval 10 timeout 31"
-  description: "iapp monitors settings"
+  description: "iappVariables monitor__Monitors"
   show_if: "iappVariables.protocol=udp"
   type: string
   required: true
-  label: iapp Monitors Settings
+  label: iappVariables monitor__Monitors
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.udp.pool__irules
   default: "when CLIENT_ACCEPTED { \r\n log local0. \"ok\"\r\n} "
-  description: "iapp irules settings"
+  description: "iappVariables pool__irules"
   type: string
   show_if: "iappVariables.protocol=udp"
   required: true
-  label: iapp irules Settings
+  label: iappVariables pool__irules
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.serverHttp.monitor__Monitors
-  default: "http_new send"
-  description: "iapp monitors settings"
+  default: "tcp_default"
+  description: "iappVariables monitor__Monitors"
   show_if: "iappVariables.protocol=http||iappVariables.protocol=https"
   type: string
   required: true
-  label: iapp Monitors Settings
+  label: iappVariables monitor__Monitors
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.serverHttps.monitor__Monitors
-  default: "https_new send"
-  description: "iapp monitors settings"
+  default: "tcp_default"
+  description: "iappVariables monitor__Monitors"
   show_if: "iappVariables.protocol=https-server443"
   type: string
   required: true
-  label: iapp Monitors Settings
+  label: iappVariables monitor__Monitors
   group: "Frontend iapp Protocol Settings"
 
 - variable: iappVariables.http_and_https.pool__irules
   default: "none"
-  description: "iapp irules settings"
+  description: "iappVariables pool__irules"
   type: string
   show_if: "iappVariables.protocol=http||iappVariables.protocol=https||iappVariables.protocol=https-server443"
   required: true
-  label: iapp irules Settings
+  label: iappVariables pool__irules
   group: "Frontend iapp Protocol Settings"
 
 
@@ -194,13 +201,7 @@ questions:
 - variable: iappVariables.vs__ProfileDefaultPersist
   default: "none"
   description: "iappVariables vs__ProfileDefaultPersist"
-  type: enum
-  options:
-    - "none"
-    - "cookie"
-    - "cookie expiration 30:00"
-    - "source_addr"
-    - "source_addr timeout 1800"
+  type: string
   required: true
   label: iappVariables vs__ProfileDefaultPersist
   group: "Frontend iapp VS Settings"

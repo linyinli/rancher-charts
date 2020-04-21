@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: {{ template "f5-vs-config.fullname" . }}-iapp
+  name: {{ template "f5-vs-config.fullname" . }}-iapp-tcp-vs
   labels:
     f5type: virtual-server
 data:
