@@ -1,6 +1,9 @@
 categories:
-- F5
-- LB
+- Proxy
+- Loadbalancer
+labels:
+  io.cattle.role: project
+  io.rancher.certified: partner
 questions:
 - variable: serviceName
   default: ""
