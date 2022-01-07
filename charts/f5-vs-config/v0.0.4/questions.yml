@@ -7,18 +7,18 @@ labels:
 questions:
 - variable: serviceName
   default: ""
-  description: "Name of backend service"
+  description: "后端服务名"
   type: string
   required: true
-  label: Service Name
-  group: "Backend Settings"
+  label: 服务名
+  group: "后端设置"
 - variable: servicePort
   default: 80
-  description: "Port of backend service"
+  description: "后端服务端口"
   type: string
   required: true
-  label: Service Port
-  group: "Backend Settings"
+  label: 服务端口
+  group: "后端设置"
 
 
 - variable: partition
